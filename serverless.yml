@@ -72,6 +72,8 @@ functions:
   spotify_worker:
     handler: app/handlers/spotify/handler.run_spotify_worker
     description: lambda for checking users spotify account
+    memory: 256
+    timeout: 90
     events:
       - schedule:
           name: run-${self:custom.stage}-spotify-worker
