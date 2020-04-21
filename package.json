@@ -1,0 +1,19 @@
+{
+  "name": "livenation-serverless-barebone",
+  "version": "1.0.0",
+  "description": "livenation serverless barebone project",
+  "keywords": [
+    "serverless framework",
+    "livenation",
+    "python"
+  ],
+  "author": "Mindo <mindosilalahi@livenation.com>",
+  "main": "index.js",
+  "license": "ISC",
+  "devDependencies": {
+    "serverless-python-requirements": "5.1.0"
+  },
+  "dependencies": {
+    "serverless": "1.67.3"
+  }
+}

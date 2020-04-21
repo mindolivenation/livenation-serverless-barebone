@@ -1,0 +1,9 @@
+Pipfile
+Pipfile.lock
+node_modules/
+__pycache__/
+.serverless/
+.coverage
+.DS_Store
+.vs_code/
+.vscode/
