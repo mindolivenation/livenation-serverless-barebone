@@ -4,7 +4,7 @@ service: ${self:custom.project_name}
 
 provider:
   name: aws
-  runtime: python3.7
+  runtime: python3.8
   region: us-east-1
   tracing: true
   tags:

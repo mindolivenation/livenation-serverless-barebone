@@ -3,11 +3,11 @@
 ## Minimum Requirements:
 
 aws access keys<br/>
-python 3.7<br/>
-node >= v10.15.2<br/>
-npm >= 6.4.1<br/>
-pipenv, version 2018.11.26<br/>
-pip >= 19.0.3<br/>
+python 3.8<br/>
+node >= v12.18.3<br/>
+npm >= 6.14.8<br/>
+pipenv, version 2020.11.15<br/>
+pip >= 20.3.3<br/>
 
 ## How to deploy this project to AWS:
 
