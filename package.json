@@ -12,9 +12,9 @@
   "license": "ISC",
   "devDependencies": {
     "serverless-python-requirements": "5.1.0",
-    "axios": ">=0.21.1"
+    "axios": "^0.21.1"
   },
   "dependencies": {
-    "serverless": "2.17.0"
+    "serverless": "2.28.6"
   }
 }
