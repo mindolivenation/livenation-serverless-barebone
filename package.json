@@ -15,6 +15,6 @@
     "axios": "^0.21.1"
   },
   "dependencies": {
-    "serverless": "2.28.6"
+    "serverless": "2.32.1"
   }
 }
