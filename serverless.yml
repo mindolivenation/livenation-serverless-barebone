@@ -21,7 +21,7 @@ provider:
   iam:
     role:
       Fn::GetAtt:
-        - LambdaDefaultRole
+        - LnLambdaDefaultRole
         - Arn
 
 package:
