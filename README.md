@@ -11,4 +11,4 @@ pip >= 20.3.3<br/>
 
 ## How to deploy this project to AWS:
 
-sls deploy --account {replace with your account name} --stage {replace with your stage name}
+sls deploy --stage {replace with your stage name}

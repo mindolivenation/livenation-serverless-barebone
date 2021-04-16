@@ -1,67 +1,47 @@
 # Livenation Serverless Barebone
 # @author mindosilalahi@livenation.com
 service: ${self:custom.project_name}
+frameworkVersion: '2.35'
+variablesResolutionMode: 20210326
+configValidationMode: warn
 
 provider:
   name: aws
   runtime: python3.8
-  region: us-east-1
-  tracing: true
+  region: ${opt:region, 'us-east-1'}
+  lambdaHashingVersion: 20201221
+  tracing:
+    lambda: true
   tags:
     service: ${self:custom.project_name}
     stage: ${self:custom.stage}
-  environment: ${file(serverless.env.yml):${opt:account}.env}
+  environment: ${file(serverless.env.yml):${self:custom.stage}.env}
   deploymentBucket:
-    name: ${file(serverless.env.yml):${opt:account}.deployment_bucket_name}
-  iamRoleStatements:
-    - Effect: Allow
-      Action:
-        - logs:CreateLogGroup
-        - logs:CreateLogStream
-        - logs:PutLogEvents
-      Resource:
-        - 'Fn::Join':
-          - ':'
-          -
-            - 'arn:aws:logs'
-            - Ref: 'AWS::Region'
-            - Ref: 'AWS::AccountId'
-            - 'log-group:/aws/lambda/*:*:*'
-    - Effect: Allow
-      Action:
-        - sqs:SendMessage
-        - sqs:DeleteMessage
-        - sqs:ReceiveMessage
-        - sqs:GetQueueAttributes
-        - sqs:GetQueueUrl
-      Resource:
-        - 'Fn::Join':
-          - ':'
-          -
-            - 'arn:aws:sqs'
-            - Ref: 'AWS::Region'
-            - Ref: 'AWS::AccountId'
-            - '*'
+    name: ${file(serverless.env.yml):${self:custom.stage}.deployment_bucket_name}
+  iam:
+    role:
+      Fn::GetAtt:
+        - LambdaDefaultRole
+        - Arn
 
 package:
-  include:
-    - app/**
-  exclude:
-    - node_modules/**
-    - app/requirements.txt
-    - /**
-    - scripts/**
-    - CHANGELOG.md
-    - README.md
-    - Pipfile
-    - Pipfile.lock
-    - requirements.txt
-    - package.json
-    - package-lock.json
-    - serverless.env.yml
+  patterns:
+    - 'app/**'
+    - '!node_modules/**'
+    - '!app/requirements.txt'
+    - '!/**'
+    - '!scripts/**'
+    - '!CHANGELOG.md'
+    - '!README.md'
+    - '!Pipfile'
+    - '!Pipfile.lock'
+    - '!requirements.txt'
+    - '!package.json'
+    - '!package-lock.json'
+    - '!serverless.env.yml'
 
 custom:
-  stage: ${opt:stage, self:provider.stage}
+  stage: ${opt:stage}
   api_version: 1
   project_name: ln-sls-barebone
 
@@ -69,21 +49,4 @@ plugins:
   - serverless-python-requirements
 
 functions:
-  spotify_worker:
-    handler: app/handlers/spotify/handler.run_spotify_worker
-    description: lambda for checking users spotify account
-    memory: 256
-    timeout: 90
-    events:
-      - schedule:
-          name: run-${self:custom.stage}-spotify-worker
-          description: 'worker for checking users spotify account'
-          rate: cron(0 6 * * ? *)
-          enabled: false
-          inputTransformer:
-            inputPathsMap:
-              eventTime: '$.time'
-            inputTemplate: '{"time": <eventTime>, "foo": "bar"}'
-    # uncomment below to use vpc
-    # vpc:
-    #   ${file(serverless.env.yml):${self:custom.stage}.vpc}
+  ${file(cf.lambdas.yml):lambdas}

@@ -1,0 +1,19 @@
+lambdas:
+  spotify_worker:
+    handler: app/handlers/spotify/handler.run_spotify_worker
+    description: lambda for checking users spotify account
+    memory: 256
+    timeout: 90
+    events:
+      - schedule:
+          name: run-${self:custom.stage}-spotify-worker
+          description: 'worker for checking users spotify account'
+          rate: cron(0 6 * * ? *)
+          enabled: false
+          inputTransformer:
+            inputPathsMap:
+              eventTime: '$.time'
+            inputTemplate: '{"time": <eventTime>, "foo": "bar"}'
+    # uncomment below to use vpc
+    # vpc:
+    #   ${file(serverless.env.yml):${self:custom.stage}.vpc}
