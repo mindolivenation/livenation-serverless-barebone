@@ -39,11 +39,17 @@ package:
     - '!package.json'
     - '!package-lock.json'
     - '!serverless.env.yml'
+    - '!cf.resources.yml'
+    - '!cf.lambdas.yml'
 
 custom:
   stage: ${opt:stage}
   api_version: 1
   project_name: ln-sls-barebone
+
+resources:
+  Resources:
+    ${file(cf.resources.yml):custom_resources}
 
 plugins:
   - serverless-python-requirements
