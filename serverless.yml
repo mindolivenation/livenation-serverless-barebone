@@ -1,7 +1,7 @@
 # Livenation Serverless Barebone
 # @author mindosilalahi@livenation.com
 service: ${self:custom.project_name}
-frameworkVersion: '2.35'
+frameworkVersion: '2.43.0'
 variablesResolutionMode: 20210326
 configValidationMode: warn
 
